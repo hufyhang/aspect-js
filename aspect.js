@@ -1,7 +1,7 @@
 'use strict';
 (function (define) {
-  if (typeof module !== 'undefined' && typeof exports !== 'undefined') {
-    exports.aspect = define;
+  if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+    module.exports = define;
   }
   else {
     window.aspect = define;
