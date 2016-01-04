@@ -28,8 +28,8 @@
       threeParams.apply(this, arguments);
       var orig = obj[method];
       obj[method] = function () {
-        advice.apply(this, arguments);
-        return orig.apply(this, arguments);
+        advice.apply(null, arguments);
+        return orig.apply(null, arguments);
       };
     },
 
@@ -40,14 +40,14 @@
       var value;
       var args = Array.prototype.slice.call(arguments, 0);
       try {
-        value = orig.apply(this, arguments);
+        value = orig.apply(null, arguments);
         args.unshift(value);
-        advice.apply(this, args);
+        advice.apply(null, args);
         return value;
       } catch (err) {
         value = err;
         args.unshift(value);
-        advice.apply(this, args);
+        advice.apply(null, args);
         throw err;
       }
      };
@@ -57,10 +57,10 @@
      threeParams.apply(this, arguments);
      var orig = obj[method];
      obj[method] = function () {
-      var value = orig.apply(this, arguments);
+      var value = orig.apply(null, arguments);
       var args = Array.prototype.slice.call(arguments, 0);
       args.unshift(value);
-      advice.apply(this, args);
+      advice.apply(null, args);
       return value;
     };
    },
@@ -70,11 +70,11 @@
     var orig = obj[method];
      obj[method] = function () {
       try {
-        return orig.apply(this, arguments);
+        return orig.apply(null, arguments);
       } catch (err) {
         var args = Array.prototype.slice.call(arguments, 0);
         args.unshift(err);
-        advice.apply(this, args);
+        advice.apply(null, args);
         throw err;
       }
      };
@@ -86,7 +86,7 @@
       obj[method] = function () {
         var args = Array.prototype.slice.call(arguments, 0);
         args.unshift(orig);
-        return advice.apply(this, args);
+        return advice.apply(null, args);
       };
     }
 
