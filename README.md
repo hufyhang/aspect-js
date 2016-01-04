@@ -31,6 +31,7 @@ Run `advice` before the execution of `method` of `context`.
 e.g.:
 
 ~~~javascript
+// In browser.
 var getName = function (id) {
     return id + ': Example';
 }
@@ -48,6 +49,7 @@ Run `advice` after the execution of `method` of `context` no matter if `method` 
 e.g.:
 
 ~~~javascript
+// In browser.
 var test = function (name, age) {
     console.log('Hi, ' + name);
     if (age > 26) {
@@ -69,6 +71,7 @@ Run `advice` after the execution of `method` of `context` only if `method` is re
 e.g.:
 
 ~~~javascript
+// In browser.
 var test = function (name, age) {
     console.log('Hi, ' + name);
     if (age > 26) {
@@ -90,6 +93,7 @@ Run `advice` after the execution of `method` of `context` only if `method` has t
 e.g.:
 
 ~~~javascript
+// In browser.
 var test = function (name, age) {
     console.log('Hi, ' + name);
     if (age > 26) {
@@ -113,6 +117,7 @@ Surrounds `method` of `context` with `advice`.
 e.g.:
 
 ~~~javascript
+// In browser.
 var test = function (name, age) {
     console.log('Hi, ' + name);
     if (age > 26) {
