@@ -1,39 +1,40 @@
 /* jshint esnext: true */
 'use strict';
 let aspect = (function () {
-  var threeParams = () => {
-    if (arguments.length !== 3) {
+  var threeParams = (...args) => {
+    if (args.length !== 3) {
       throw Error('Aspect requires three parameters.');
     }
-    if (typeof arguments[0] !== 'object') {
+    if (typeof args[0] !== 'object') {
       throw Error('Aspect requires an object-type parameter for "object".');
     }
-    if (typeof arguments[1] !== 'string') {
+    if (typeof args[1] !== 'string') {
       throw Error('Aspect requires an string-type parameter for "method".');
     }
-    if (typeof arguments[2] !== 'function') {
+    if (typeof args[2] !== 'function') {
       throw Error('Aspect requires an function-type parameter for "advice".');
     }
   };
 
   return {
     before: (obj, method, advice) => {
-      threeParams.apply(null, arguments);
+      let args = [obj, method, advice];
+      threeParams.apply(null, args);
       let orig = obj[method];
       obj[method] = () => {
-        advice.apply(null, arguments);
-        return orig.apply(null, arguments);
+        advice.apply(null, args);
+        return orig.apply(null, args);
       };
     },
 
     after: (obj, method, advice) => {
-      threeParams.apply(null, arguments);
+      let args = [obj, method, advice];
+      threeParams.apply(null, args);
       let orig = obj[method];
       obj[method] = () => {
         let value;
-        let args = [...arguments];
         try {
-          value = orig.apply(null, arguments);
+          value = orig.apply(null, args);
           args.unshift(value);
           advice.apply(null, args);
           return value;
@@ -47,11 +48,11 @@ let aspect = (function () {
     },
 
     afterReturn: (obj, method, advice) => {
-      threeParams.apply(null, arguments);
+      let args = [obj, method, advice];
+      threeParams.apply(null, args);
       let orig = obj[method];
       obj[method] = () => {
-        let value = orig.apply(null, arguments);
-        let args = [...arguments];
+        let value = orig.apply(null, args);
         args.unshift(value);
         advice.apply(null, args);
         return value;
@@ -59,13 +60,13 @@ let aspect = (function () {
     },
 
     afterThrow: (obj, method, advice) => {
-      threeParams.apply(null, arguments);
+      let args = [obj, method, advice];
+      threeParams.apply(null, args);
       let orig = obj[method];
       obj[method] = () => {
         try {
-          return orig.apply(null, arguments);
+          return orig.apply(null, args);
         } catch (err) {
-          let args = [...arguments];
           args.unshift(err);
           advice.apply(null, args);
           throw err;
@@ -74,10 +75,10 @@ let aspect = (function () {
     },
 
     around: (obj, method, advice) => {
-      threeParams.apply(null, arguments);
+      let args = [obj, method, advice];
+      threeParams.apply(null, args);
       let orig = obj[method];
       obj[method] = () => {
-        let args = [...arguments];
         args.unshift(orig);
         return advice.apply(null, args);
       };
